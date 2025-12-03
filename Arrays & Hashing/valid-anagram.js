@@ -23,7 +23,7 @@ var isAnagram = function(s, t) {
     return false;
 };
 
-// Sol 2: 
+// Sol 2: Improved Solution
 
 /**
  * @param {string} s
@@ -35,41 +35,37 @@ var isAnagram = function(s, t) {
         return false;
     }
 
-    let sMap = new Map();
-    let tMap = new Map();
+    let sMap = createHashMap(s);
+    let tMap = createHashMap(t);
 
-    for(let i = 0; i < s.length ; i++)
+   return isItValidAnagram(sMap, tMap);
+};
+
+var createHashMap = function(str){
+
+    const map = new Map();
+
+    for(let i = 0; i < str.length ; i++)
     {
-        if(sMap.has(s[i]))
+        if(map.has(str[i]))
         {
-            sMap.set(s[i], sMap.get(s[i]) + 1);
+            map.set(str[i], map.get(str[i]) + 1);
         }else
         {
-          sMap.set(s[i], 0);  
+          map.set(str[i], 1);  
         }
     } 
 
-    for(let j = 0; j < t.length ; j++)
-    {
-        if(tMap.has(t[j]))
-        {
-            tMap.set(t[j], tMap.get(t[j]) + 1);
-        }else
-        {
-            tMap.set(t[j], 0);
-        }
-    }
-   
-   if(sMap.size !== tMap.size)
-   {
-        return false;
-   }
-   
-   for(let [key,val] of sMap){
-        if(!tMap.has(key) || tMap.get(key) !== val ){
+    return map;
+}
+
+var isItValidAnagram = function(map1, map2){
+
+    for(let [key,val] of map1){
+        if(!map2.has(key) || map2.get(key) !== val ){
             return false;
         }
    }
 
    return true;
-};
+}
