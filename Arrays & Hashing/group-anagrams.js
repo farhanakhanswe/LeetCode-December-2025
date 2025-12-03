@@ -4,17 +4,16 @@
  * @return {string[][]}
  */
 
-// Solution 1: Needs Improvement
+// Solution 1
 /**
  * @param {string[]} strs
  * @return {string[][]}
  */
-
 var groupAnagrams = function(strs) {
 
     if(strs.length < 1) return [];
 
-    let sortedStringsMap = createSortedStringsHashMap(strs);
+    let sortedStringsMap = new Map();
     let groupOfAnagrams = [];
 
     for(let i = 0; i < strs.length; i++)
@@ -22,6 +21,9 @@ var groupAnagrams = function(strs) {
         let sortedString = strs[i].split('').sort().join('');
         if(sortedStringsMap.has(sortedString)){
             sortedStringsMap.get(sortedString).push(strs[i]);
+        }else
+        {
+            sortedStringsMap.set(sortedString, [strs[i]]);
         }
     }
 
@@ -32,20 +34,8 @@ var groupAnagrams = function(strs) {
     return groupOfAnagrams;
 };
 
-var createSortedStringsHashMap = function(str){
 
-    // key -> sorted string and value -> array containing anagrams
-    const map = new Map(); 
 
-    for(let i = 0; i < str.length; i++)
-    {
-        let sortedString = str[i].split('').sort().join('');
-        if(!map.has(sortedString)) {
-            map.set(sortedString, [] );
-        }
-    }
 
-    return map;
-}
 
 
