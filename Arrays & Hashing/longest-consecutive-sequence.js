@@ -4,7 +4,7 @@
  * @return {number}
  */
 
-// Incorrect Solution:
+// Incorrect Solution 1:
 
 var longestConsecutive = function(nums) {
 
@@ -49,4 +49,41 @@ var longestConsecutive = function(nums) {
     }
 
     return length === 0 ? 1 : length;
+};
+
+// Incorrect Solution 2:
+
+var longestConsecutive = function(nums) {
+
+    if(nums.length < 1) return 0;
+    let sortedArr = [...new Set(nums)].sort((a, b) => a - b); 
+    if(sortedArr.length === 1) return 1;
+
+    let length = 1;
+    let count = 0;
+
+    for(let i = 0 ; i < sortedArr.length ; i++)
+    {
+        if(sortedArr[i] + 1 === sortedArr[i+1]){
+            count++;
+        }
+
+        if((sortedArr[i] + 1 !== sortedArr[i+1] || sortedArr[i+1] === undefined)){
+            if(sortedArr[i - 1] !== undefined && sortedArr[i - 1] + 1 === sortedArr[i])
+            {
+                count++;
+                if(count > length){
+                    length = count;
+                    count = 0;
+                }
+            }
+        }
+
+        if(count > length){
+            length = count;
+        }
+    }
+
+    return length;
+
 };
