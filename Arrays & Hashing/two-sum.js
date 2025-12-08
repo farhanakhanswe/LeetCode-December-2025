@@ -1,24 +1,41 @@
 /**
  Question Link: https://leetcode.com/problems/two-sum/
+/**
  * @param {number[]} nums
  * @param {number} target
  * @return {number[]}
  */
+
 var twoSum = function(nums, target) {
-    /*
-    array of integers and there is a target 
-    any two el need to add so sum equals target
-    each input would have exactly one solution and you may not 
-    use the same element twice
+    
+    if(nums.length < 2) return [1,-1];
 
-    return false if the arr length is not 2
+    const numsMap = new Map();
 
-    loop over parent array
-    loop over child array
-    each el of parent array can add with each element in child array
-    if the parent arr el index === child arr el index then we would skip
-    we need to return the indice and not the elemnts, inside an array
-    */
+    for(let i = 0; i < nums.length; i++){
+        
+        if(!numsMap.has(nums[i])){
+            numsMap.set(nums[i], i); // storing element with index
+        }
+        
+        let diff = target - nums[i];
+        if(numsMap.has(diff) && numsMap.get(diff) !== i){
+            return [i, numsMap.get(diff)];
+        } 
+    }
+
+    return [-1,-1];
+};
+
+
+// Solution: Not Recommended
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+
+var twoSum = function(nums, target) {
 
     if(nums.length < 2){
         return [-1,-1];
